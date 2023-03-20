@@ -19,13 +19,14 @@ public class PlayerController : MonoBehaviour
     {
         //player.AddForce(((Input.GetAxis("Horizontal") * -1) * 0.9f), 0, 0);
         int speed = 5;
-        Vector3 movement = new Vector3((Input.GetAxis("Horizontal")), 0, 0);
-        player.gameObject.transform.Translate(movement * speed * Time.deltaTime);
+        Vector3 movement = new Vector3((Input.GetAxis("Horizontal")), player.position.y, 0) * speed;
+        player.velocity = movement;
+        //player.gameObject.transform.Translate(movement );
         //player.MovePosition(movement * speed * Time.deltaTime);
 
         if (Input.GetButtonDown("Jump") && canJump)
         {
-            player.AddForce(0, 300, 0);
+            player.AddForce(0, 10000f, 0);
             canJump = false;
         }
 
@@ -38,9 +39,10 @@ public class PlayerController : MonoBehaviour
         }
         else if (collision.gameObject.tag == "Level")
         {
-            Debug.LogWarning("== Level");
-            //player.velocity = Vector3.zero;
+            player.velocity = Vector3.zero;
         }
+
+
 
     }
     private void OnTriggerEnter(Collider other)
