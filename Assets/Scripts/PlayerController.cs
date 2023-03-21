@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && canJump)
         {
-            player.AddForce(0, 300f, 0);
+            player.AddForce(0, 350, 0);
             canJump = false;
         }
 
@@ -38,7 +38,10 @@ public class PlayerController : MonoBehaviour
             canJump = true;
         }
 
-
+        if (collision.gameObject.tag == "Finish")
+        {
+            Destroy(player.gameObject);
+        }
 
 
     }
