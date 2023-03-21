@@ -8,10 +8,14 @@ public class PlayerController : MonoBehaviour
     public Rigidbody player;
     public new Transform camera;
     private bool canJump = true;
+    public PowerBarManager powerBar;
+    public float maxJump = 5;
+    public float currentJump;
 
     void Start()
     {
-        
+        currentJump = maxJump;
+        powerBar.UpdatePowerBar();
     }
 
     
@@ -19,16 +23,19 @@ public class PlayerController : MonoBehaviour
     {
         //player.AddForce(((Input.GetAxis("Horizontal") * -1) * 0.9f), 0, 0);
         int speed = 5;
-        Vector3 movement = new Vector3((Input.GetAxis("Horizontal")), 0, 0);
-        player.gameObject.transform.Translate(movement * speed * Time.deltaTime);
+        Vector3 movement = new Vector3((Input.GetAxis("Horizontal")) * speed, player.velocity.y, 0);
+        player.velocity = movement;
+        //player.gameObject.transform.Translate(movement );
         //player.MovePosition(movement * speed * Time.deltaTime);
 
-        if (Input.GetButtonDown("Jump") && canJump)
+        if (Input.GetButtonDown("Jump") && canJump && currentJump > 0)
         {
-            player.AddForce(0, 300, 0);
+            player.AddForce(0, 350, 0);
+            currentJump = currentJump - 1;
             canJump = false;
+            powerBar.UpdatePowerBar();
         }
-
+        //Add "game over" screen
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -36,11 +43,12 @@ public class PlayerController : MonoBehaviour
         {
             canJump = true;
         }
-        else if (collision.gameObject.tag == "Level")
+
+        if (collision.gameObject.tag == "Finish")
         {
-            Debug.LogWarning("== Level");
-            //player.velocity = Vector3.zero;
+            Destroy(player.gameObject);
         }
+
 
     }
     private void OnTriggerEnter(Collider other)
