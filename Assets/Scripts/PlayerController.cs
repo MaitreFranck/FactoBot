@@ -8,10 +8,14 @@ public class PlayerController : MonoBehaviour
     public Rigidbody player;
     public new Transform camera;
     private bool canJump = true;
+    public PowerBarManager powerBar;
+    public float maxJump = 5;
+    public float currentJump;
 
     void Start()
     {
-        
+        currentJump = maxJump;
+        powerBar.UpdatePowerBar();
     }
 
     
@@ -24,12 +28,14 @@ public class PlayerController : MonoBehaviour
         //player.gameObject.transform.Translate(movement );
         //player.MovePosition(movement * speed * Time.deltaTime);
 
-        if (Input.GetButtonDown("Jump") && canJump)
+        if (Input.GetButtonDown("Jump") && canJump && currentJump > 0)
         {
             player.AddForce(0, 350, 0);
+            currentJump = currentJump - 1;
             canJump = false;
+            powerBar.UpdatePowerBar();
         }
-
+        //Add "game over" screen
     }
     private void OnCollisionEnter(Collision collision)
     {
