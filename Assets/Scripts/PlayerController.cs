@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetButtonDown("Jump") && canJump && currentJump > 0)
         {
-            player.AddForce(0, 350, 0);
+            player.AddForce(0, 650, 0);
             currentJump = currentJump - 1;
             canJump = false;
             powerBar.UpdatePowerBar();
@@ -48,7 +48,12 @@ public class PlayerController : MonoBehaviour
         {
             Destroy(player.gameObject);
         }
-
+        if (collision.gameObject.tag == "Battery")
+        {
+            Destroy(collision.gameObject);
+            currentJump = maxJump;
+            powerBar.UpdatePowerBar();
+        }
 
     }
     private void OnTriggerEnter(Collider other)

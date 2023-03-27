@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Level
   - Ground
+  - Battery
   layers:
   - Default
   - TransparentFX
