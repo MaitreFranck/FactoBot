@@ -22,7 +22,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         //player.AddForce(((Input.GetAxis("Horizontal") * -1) * 0.9f), 0, 0);
-        int speed = 5;
+        int speed = 2;
+        Debug.Log(player.velocity);
         Vector3 movement = new Vector3((Input.GetAxis("Horizontal")) * speed, player.velocity.y, 0);
         player.velocity = movement;
         //player.gameObject.transform.Translate(movement );
